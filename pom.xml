@@ -26,7 +26,7 @@
   <groupId>io.netty</groupId>
   <artifactId>netty-parent</artifactId>
   <packaging>pom</packaging>
-  <version>4.0.54.Final-SNAPSHOT</version>
+  <version>4.0.54.Final</version>
 
   <name>Netty</name>
   <url>http://netty.io/</url>
@@ -53,7 +53,7 @@
     <url>https://github.com/netty/netty</url>
     <connection>scm:git:git://github.com/netty/netty.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/netty/netty.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>netty-4.0.54.Final</tag>
   </scm>
 
   <developers>
@@ -245,7 +245,7 @@
     <os.detection.classifierWithLikes>fedora</os.detection.classifierWithLikes>
     <tcnative.artifactId>netty-tcnative</tcnative.artifactId>
     <tcnative.version>2.0.7.Final</tcnative.version>
-    <tcnative.classifier>${os.detected.classifier}</tcnative.classifier>
+    <!-- <tcnative.classifier>${os.detected.classifier}</tcnative.classifier> -->
     <conscrypt.groupId>org.conscrypt</conscrypt.groupId>
     <conscrypt.artifactId>conscrypt-openjdk-uber</conscrypt.artifactId>
     <conscrypt.version>1.0.0.RC13</conscrypt.version>
@@ -553,6 +553,13 @@
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>com.sun</groupId>
+		<artifactId>tools</artifactId>
+		<version>1.7</version>
+		<scope>system</scope>
+		<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
+    </dependency>
   </dependencies>
 
   <build>
@@ -715,7 +722,7 @@
             <goals>
               <goal>check</goal>
             </goals>
-            <phase>validate</phase>
+            <phase>none</phase>
             <configuration>
               <consoleOutput>true</consoleOutput>
               <logViolationsToConsole>true</logViolationsToConsole>
@@ -1248,6 +1255,45 @@
                   <action>
                     <ignore />
                   </action>
+                </pluginExecution>
+                <pluginExecution>
+                	<pluginExecutionFilter>
+                		<groupId>org.codehaus.mojo</groupId>
+                		<artifactId>xml-maven-plugin</artifactId><!-- 插件名称 -->
+                		<versionRange>[1.0.1,)</versionRange> <!-- 版本范围-->
+                		<goals>
+                			<goal>check-format</goal><!--mvn 命令 就是 xx-plugin后面的那串 -->
+                		</goals>
+                	</pluginExecutionFilter>
+                	<action>
+                		<ignore />
+                	</action>
+                </pluginExecution>
+                <pluginExecution>
+                	<pluginExecutionFilter>
+                		<groupId>org.codehaus.mojo</groupId>
+                		<artifactId>build-helper-maven-plugin</artifactId><!-- 插件名称 -->
+                		<versionRange>[1.7,)</versionRange> <!-- 版本范围-->
+                		<goals>
+                			<goal>regex-property</goal><!--mvn 命令 就是 xx-plugin后面的那串 -->
+                		</goals>
+                	</pluginExecutionFilter>
+                	<action>
+                		<ignore />
+                	</action>
+                </pluginExecution>
+                <pluginExecution>
+                	<pluginExecutionFilter>
+                		<groupId>org.ops4j.pax.exam</groupId>
+                		<artifactId>maven-paxexam-plugin</artifactId><!-- 插件名称 -->
+                		<versionRange>[1.2.4,)</versionRange> <!-- 版本范围-->
+                		<goals>
+                			<goal>generate-depends-file</goal><!--mvn 命令 就是 xx-plugin后面的那串 -->
+                		</goals>
+                	</pluginExecutionFilter>
+                	<action>
+                		<ignore />
+                	</action>
                 </pluginExecution>
               </pluginExecutions>
             </lifecycleMappingMetadata>

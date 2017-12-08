@@ -20,7 +20,7 @@
   <parent>
     <groupId>io.netty</groupId>
     <artifactId>netty-parent</artifactId>
-    <version>4.0.54.Final-SNAPSHOT</version>
+    <version>4.0.54.Final</version>
   </parent>
 
   <artifactId>netty-testsuite</artifactId>
@@ -52,7 +52,8 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>${tcnative.artifactId}</artifactId>
-      <classifier>${tcnative.classifier}</classifier>
+      <!-- <classifier>${tcnative.classifier}</classifier> -->
+      <version>${tcnative.version}</version>
       <optional>true</optional>
     </dependency>
 
