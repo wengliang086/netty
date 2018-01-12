@@ -318,6 +318,10 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C ext
             return new DefaultChannelPromise(channel, GlobalEventExecutor.INSTANCE).setFailure(t);
         }
 
+        /**
+         * 其调用链如下: AbstractBootstrap.initAndRegister -> MultithreadEventLoopGroup.register -> 
+         *            SingleThreadEventLoop.register -> AbstractUnsafe.register
+         */
         ChannelFuture regFuture = group().register(channel);
         if (regFuture.cause() != null) {
             if (channel.isRegistered()) {

@@ -328,6 +328,9 @@ public class NioSocketChannel extends AbstractNioByteChannel implements io.netty
 
     @Override
     protected AbstractNioUnsafe newUnsafe() {
+    	/**
+    	 * 其实 unsafe 特别关键, 它封装了对 Java 底层 Socket 的操作, 因此实际上是沟通 Netty 上层和 Java 底层的重要的桥梁.
+    	 */
         return new NioSocketChannelUnsafe();
     }
 

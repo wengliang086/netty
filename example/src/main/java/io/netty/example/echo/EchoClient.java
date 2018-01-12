@@ -50,7 +50,10 @@ public final class EchoClient {
         } else {
             sslCtx = null;
         }
-
+        /**
+         * 参考博客：
+         * https://segmentfault.com/a/1190000007282628
+         */
         // Configure the client.
         EventLoopGroup group = new NioEventLoopGroup();
         try {
