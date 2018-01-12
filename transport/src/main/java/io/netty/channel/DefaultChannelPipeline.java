@@ -1231,6 +1231,11 @@ public class DefaultChannelPipeline implements ChannelPipeline {
                 ChannelHandlerContext ctx,
                 SocketAddress remoteAddress, SocketAddress localAddress,
                 ChannelPromise promise) throws Exception {
+        	/**
+        	 * unsafe 是 pipeline.channel().unsafe() 返回的
+        	 * 其实是 AbstractNioChannel.AbstractNioUnsafe 内部类
+        	 * AbstractNioUnsafe.connect
+        	 */
             unsafe.connect(remoteAddress, localAddress, promise);
         }
 

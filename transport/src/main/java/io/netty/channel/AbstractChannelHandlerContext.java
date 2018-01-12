@@ -536,6 +536,7 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap impleme
     private void invokeConnect(SocketAddress remoteAddress, SocketAddress localAddress, ChannelPromise promise) {
         if (invokeHandler()) {
             try {
+            	// 这里调用的是 HeadContext.connect
                 ((ChannelOutboundHandler) handler()).connect(this, remoteAddress, localAddress, promise);
             } catch (Throwable t) {
                 notifyOutboundHandlerException(t, promise);
