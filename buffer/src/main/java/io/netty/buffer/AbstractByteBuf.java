@@ -889,6 +889,9 @@ public abstract class AbstractByteBuf extends ByteBuf {
     @Override
     public int writeBytes(ScatteringByteChannel in, int length) throws IOException {
         ensureWritable(length);
+        /**
+         * 读取数据操作是在setBytes函数中进行的，一般实现是在 PooledUnsafeDirectByteBuf 类中
+         */
         int writtenBytes = setBytes(writerIndex, in, length);
         if (writtenBytes > 0) {
             writerIndex += writtenBytes;

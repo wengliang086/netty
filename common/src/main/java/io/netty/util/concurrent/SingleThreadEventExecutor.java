@@ -735,6 +735,9 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
         if (inEventLoop) {
             addTask(task);
         } else {
+        	/**
+        	 * 当 EventLoop.execute 第一次被调用时, 就会触发 startThread() 的调用, 进而导致了 EventLoop 所对应的 Java 线程的启动.
+        	 */
             startThread();
             addTask(task);
             if (isShutdown() && removeTask(task)) {

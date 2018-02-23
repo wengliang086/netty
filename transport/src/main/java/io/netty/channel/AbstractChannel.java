@@ -420,12 +420,23 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
                 return;
             }
 
+            /**
+             * Channel 注册过程所做的工作就是将 Channel 与对应的 EventLoop 关联, 因此这也体现了, 
+             * 在 Netty 中, 每个 Channel 都会关联一个特定的 EventLoop, 并且这个 Channel 中的所有 IO 操作都是在这个 EventLoop 中执行的
+             */
             AbstractChannel.this.eventLoop = eventLoop;
 
+            /**
+             * 一路从 Bootstrap.bind或者connect 方法跟踪到 AbstractChannel#AbstractUnsafe.register 方法, 
+             * 整个代码都是在主线程中运行的, 因此上面的 eventLoop.inEventLoop() 就为 false
+             */
             if (eventLoop.inEventLoop()) {
                 register0(promise);
             } else {
                 try {
+                	/**
+                	 * eventLoop 是一个 NioEventLoop 的实例, 而 NioEventLoop 没有实现 execute 方法, 因此调用的是 SingleThreadEventExecutor.execute
+                	 */
                     eventLoop.execute(new Runnable() {
                         @Override
                         public void run() {

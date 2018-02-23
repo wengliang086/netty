@@ -793,6 +793,9 @@ abstract class AbstractChannelHandlerContext extends DefaultAttributeMap impleme
 
     private void invokeWriteAndFlush(Object msg, ChannelPromise promise) {
         if (invokeHandler()) {
+        	/**
+        	 * 写数据的过程其实是分为两步的，第一步是将要写的数据写到buffer中，第二步是flush其实就是从buffer中读取数据然后发送给服务端
+        	 */
             invokeWrite0(msg, promise);
             invokeFlush0();
         } else {

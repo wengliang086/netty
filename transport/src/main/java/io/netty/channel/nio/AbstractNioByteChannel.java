@@ -114,8 +114,13 @@ public abstract class AbstractNioByteChannel extends AbstractNioChannel {
                 int totalReadAmount = 0;
                 boolean readPendingReset = false;
                 do {
+                	// 1、分配 ByteBuf
                     byteBuf = allocHandle.allocate(allocator);
                     int writable = byteBuf.writableBytes();
+                    /**
+                     * 读取操作是在doReadBytes(byteBuf)中，具体实现是在NioSocketChannel中
+                     */
+                    // 2、从 SocketChannel 中读取数据
                     int localReadAmount = doReadBytes(byteBuf);
                     if (localReadAmount <= 0) {
                         // not was read release the buffer
@@ -132,6 +137,7 @@ public abstract class AbstractNioByteChannel extends AbstractNioChannel {
                         readPendingReset = true;
                         setReadPending(false);
                     }
+                    // 3、调用 pipeline.fireChannelRead 发送一个 inbound 事件.
                     pipeline.fireChannelRead(byteBuf);
                     byteBuf = null;
 
@@ -144,6 +150,7 @@ public abstract class AbstractNioByteChannel extends AbstractNioChannel {
                     totalReadAmount += localReadAmount;
 
                     // stop reading
+                    // 检查是否是配置了自动读取, 如果不是, 则立即退出循环.
                     if (!config.isAutoRead()) {
                         break;
                     }

@@ -53,6 +53,7 @@ public final class EchoClient {
         /**
          * 参考博客：
          * https://segmentfault.com/a/1190000007282628
+         * https://github.com/yongshun/learn_netty_source_code
          */
         // Configure the client.
         EventLoopGroup group = new NioEventLoopGroup();

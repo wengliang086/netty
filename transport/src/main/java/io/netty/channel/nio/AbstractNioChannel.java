@@ -261,6 +261,10 @@ public abstract class AbstractNioChannel extends AbstractChannel {
 
             // Regardless if the connection attempt was cancelled, channelActive() event should be triggered,
             // because what happened is what happened.
+            /**
+             * 通过调用 pipeline().fireChannelActive() 将通道激活的消息(即 Socket 连接成功)发送出去. 
+             * 当调用 pipeline.fireXXX 后, 就是 Inbound 事件的起点.
+             */
             if (!wasActive && active) {
                 pipeline().fireChannelActive();
             }
